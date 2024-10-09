@@ -16,7 +16,6 @@ import androidx.compose.ui.window.application
 @Preview
 fun App() {
     var text by remember { mutableStateOf("") }
-    val message = "Hola $text!"
     val buttonEnabled = text.isNotEmpty()
 
     MaterialTheme {
@@ -32,7 +31,7 @@ fun App() {
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
-                text = message,
+                text = getGreeting(text),
                 modifier = Modifier.padding(25.dp).align(Alignment.CenterHorizontally),
                 color = Color.Blue
             )
@@ -52,3 +51,5 @@ fun main() = application {
         App()
     }
 }
+
+fun getGreeting(name: String) = "Hola $name!"
