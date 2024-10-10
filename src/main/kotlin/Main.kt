@@ -4,7 +4,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,10 +15,7 @@ import androidx.compose.ui.window.application
 
 @Composable
 @Preview
-fun App() {
-    var text by remember { mutableStateOf("") }
-    val buttonEnabled = text.isNotEmpty()
-
+fun App(appState: AppState) {
     MaterialTheme {
         Column(
             modifier = Modifier
@@ -26,19 +24,19 @@ fun App() {
             verticalArrangement = Arrangement.Center
         ) {
             TextField(
-                value = text,
-                onValueChange = { text = it },
+                value = appState.text.value,
+                onValueChange = { appState.text.value = it },
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
-                text = getGreeting(text),
+                text = getGreeting(appState.text.value),
                 modifier = Modifier.padding(25.dp).align(Alignment.CenterHorizontally),
                 color = Color.Blue
             )
             Button(
-                onClick = { text = "" },
+                onClick = { appState.text.value = "" },
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                enabled = buttonEnabled
+                enabled = appState.buttonEnabled
             ) {
                 Text("Clean")
             }
@@ -46,10 +44,20 @@ fun App() {
     }
 }
 
-fun main() = application {
-    Window(onCloseRequest = ::exitApplication, title = "My Application") {
-        App()
+fun main() {
+    val appState = AppState()
+
+    application {
+        Window(onCloseRequest = ::exitApplication, title = "My Application") {
+            App(appState)
+        }
     }
 }
 
 fun getGreeting(name: String) = "Hola $name!"
+
+class AppState {
+    val text = mutableStateOf("")
+    val buttonEnabled: Boolean
+        get() = text.value.isNotEmpty()
+}
