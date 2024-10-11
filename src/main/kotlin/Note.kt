@@ -10,15 +10,19 @@ data class Note(val title: String, val description: String, val type: Type) {
     enum class Type { TEXT, AUDIO }
 }
 
-fun main() {
+/*fun main() {
     val result = getNotes()
     println(result)
-}
+}*/
 
-fun getNotes(): List<Note> = (1..10).map {
-    Note(
-        "Title $it",
-        "Description $it",
-        if (it % 3 == 0) Note.Type.AUDIO else Note.Type.TEXT
-    )
+fun getNotes(callback: (List<Note>) -> Unit) {
+    Thread.sleep(2000)
+    val notes = (1..10).map {
+        Note(
+            "Title $it",
+            "Description $it",
+            if (it % 3 == 0) Note.Type.AUDIO else Note.Type.TEXT
+        )
+    }
+    callback.invoke(notes)
 }
