@@ -15,7 +15,7 @@ import androidx.compose.ui.window.application
 
 @Composable
 @Preview
-fun App(appState: AppState) {
+fun App(appState: AppState2) {
     MaterialTheme {
         Column(
             modifier = Modifier
@@ -45,7 +45,7 @@ fun App(appState: AppState) {
 }
 
 fun main() {
-    val appState = AppState()
+    val appState = AppState2()
 
     application {
         Window(onCloseRequest = ::exitApplication, title = "My Application") {
@@ -56,7 +56,7 @@ fun main() {
 
 fun getGreeting(name: String) = "Hola $name!"
 
-class AppState {
+class AppState2 {
     val text = mutableStateOf("")
     val buttonEnabled: Boolean
         get() = text.value.isNotEmpty()

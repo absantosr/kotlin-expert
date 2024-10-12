@@ -8,38 +8,20 @@ import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.Title
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import kotlin.concurrent.thread
-
-class AppState2 {
-    val state = mutableStateOf(UiState())
-
-    fun loadNotes() {
-        thread {
-            state.value = UiState(loading = true)
-            getNotes { state.value = UiState(notes = it) }
-        }
-    }
-
-    data class UiState(
-        val notes: List<Note>? = null,
-        val loading: Boolean = false
-    )
-}
 
 @Composable
 @Preview
-fun App(appState2: AppState2) {
-    val notes = appState2.state.value.notes
+fun App(appState: AppState) {
+    val notes = appState.state.value.notes
     if (notes == null) {
         // Lanza la acción por única vez
         LaunchedEffect(true) {
-            appState2.loadNotes()
+            appState.loadNotes()
         }
     }
 
@@ -48,7 +30,7 @@ fun App(appState2: AppState2) {
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            if (appState2.state.value.loading)
+            if (appState.state.value.loading)
                 CircularProgressIndicator()
 
             if (notes != null)
@@ -99,11 +81,11 @@ private fun NoteList(notes: List<Note>) {
 }
 
 fun main() {
-    val appState2 = AppState2()
+    val appState = AppState()
 
     application {
         Window(onCloseRequest = ::exitApplication) {
-            App(appState2)
+            App(appState)
         }
     }
 }
