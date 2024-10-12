@@ -27,7 +27,7 @@ class AppState2 {
     }
 
     data class UiState(
-        val notes: List<Note> = emptyList(),
+        val notes: List<Note>? = null,
         val loading: Boolean = false
     )
 }
@@ -35,8 +35,12 @@ class AppState2 {
 @Composable
 @Preview
 fun App(appState2: AppState2) {
-    LaunchedEffect(true) {
-        appState2.loadNotes()
+    val notes = appState2.state.value.notes
+    if (notes == null) {
+        // Lanza la acción por única vez
+        LaunchedEffect(true) {
+            appState2.loadNotes()
+        }
     }
 
     MaterialTheme {
@@ -46,7 +50,9 @@ fun App(appState2: AppState2) {
         ) {
             if (appState2.state.value.loading)
                 CircularProgressIndicator()
-            NoteList(appState2.state.value.notes)
+
+            if (notes != null)
+                NoteList(notes)
         }
     }
 }
