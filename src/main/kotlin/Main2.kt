@@ -16,12 +16,12 @@ import androidx.compose.ui.window.application
 
 @Composable
 @Preview
-fun App(appState: AppState) {
-    val notes = appState.state.value.notes
-    if (notes == null) {
+fun App(appState: AppState): Unit = with(appState) {
+
+    if (state.value.notes == null) {
         // Lanza la acción por única vez
         LaunchedEffect(true) {
-            appState.loadNotes()
+            loadNotes()
         }
     }
 
@@ -30,11 +30,10 @@ fun App(appState: AppState) {
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            if (appState.state.value.loading)
+            if (state.value.loading)
                 CircularProgressIndicator()
 
-            if (notes != null)
-                NoteList(notes)
+            state.value.notes?.let { NoteList(it) }
         }
     }
 }
