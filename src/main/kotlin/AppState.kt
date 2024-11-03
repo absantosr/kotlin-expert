@@ -3,6 +3,24 @@ import androidx.compose.runtime.mutableStateOf
 import kotlin.concurrent.thread
 
 class AppState {
+
+    /*
+    companion object MyCompObj {
+        var x = 20
+        fun foo() {
+            // TODO
+        }
+    }
+    */
+
+    //Solo un companion object por clase
+    companion object {
+        var x = 40
+        fun foo() {
+            // TODO
+        }
+    }
+
     val state: MutableState<UiState> = mutableStateOf(UiState())
 
     fun loadNotes() {

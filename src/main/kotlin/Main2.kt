@@ -82,6 +82,9 @@ private fun NoteList(notes: List<Note>) {
 fun main() {
     val appState = AppState()
 
+    AppState.x
+    AppState.foo()
+
     application {
         Window(onCloseRequest = ::exitApplication) {
             App(appState)
