@@ -1,5 +1,6 @@
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import kotlin.concurrent.thread
 
 object AppState {
@@ -8,7 +9,7 @@ object AppState {
     companion object MyCompObj {
         var x = 20
         fun foo() {
-            // TODO
+            //
         }
     }
     */
@@ -18,20 +19,24 @@ object AppState {
     companion object {
         var x = 40
         fun foo() {
-            // TODO
+            //
         }
     }
     */
 
-    val state: MutableState<UiState> = mutableStateOf(UiState())
+    //val state: MutableState<UiState> = mutableStateOf(UiState())
+    var state by mutableStateOf(UiState())
 
     fun loadNotes() {
         thread {
             //state.value = UiState(loading = true)
             //state.update2 { UiState(loading = true) }
-            state.update2 { it.copy(loading = true) }
+            //state.update2 { it.copy(loading = true) }
+            state = UiState(loading = true)
+
             //getNotes { state.value = UiState(notes = it) }
-            getNotes { notes -> state.update2 { UiState(notes = notes) } }
+            //getNotes { notes -> state.update2 { UiState(notes = notes) } }
+            getNotes { notes -> state = UiState(notes = notes) }
         }
     }
 
