@@ -16,7 +16,7 @@ import androidx.compose.ui.window.application
 
 @Composable
 @Preview
-fun App(appState: AppState): Unit = with(appState) {
+fun App(): Unit = with(AppState) {
 
     if (state.value.notes == null) {
         // Lanza la acción por única vez
@@ -80,14 +80,14 @@ private fun NoteList(notes: List<Note>) {
 }
 
 fun main() {
-    val appState = AppState()
-
+    /*
     AppState.x
     AppState.foo()
+    */
 
     application {
         Window(onCloseRequest = ::exitApplication) {
-            App(appState)
+            App()
         }
     }
 }

@@ -2,7 +2,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import kotlin.concurrent.thread
 
-class AppState {
+object AppState {
 
     /*
     companion object MyCompObj {
@@ -14,12 +14,14 @@ class AppState {
     */
 
     //Solo un companion object por clase
+    /*
     companion object {
         var x = 40
         fun foo() {
             // TODO
         }
     }
+    */
 
     val state: MutableState<UiState> = mutableStateOf(UiState())
 
@@ -29,7 +31,7 @@ class AppState {
             //state.update2 { UiState(loading = true) }
             state.update2 { it.copy(loading = true) }
             //getNotes { state.value = UiState(notes = it) }
-            getNotes { notes -> state.update2 { UiState(notes = notes) }}
+            getNotes { notes -> state.update2 { UiState(notes = notes) } }
         }
     }
 
