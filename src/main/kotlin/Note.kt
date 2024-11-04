@@ -1,5 +1,7 @@
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 data class Note2(val title: String, val description: String, val type: NoteType)
@@ -33,13 +35,16 @@ fun getNotes(callback: (List<Note>) -> Unit) {
 }
 */
 
-suspend fun getNotes() = withContext(Dispatchers.IO) {
+fun getNotes(): Flow<List<Note>> = flow {
     delay(2000)
-    (1..10).map {
-        Note(
+    var notes = emptyList<Note>()
+    (1..10).forEach {
+        notes = notes + Note(
             "Title $it",
             "Description $it",
             if (it % 3 == 0) Note.Type.AUDIO else Note.Type.TEXT
         )
+        emit(notes)
+        delay(500)
     }
 }

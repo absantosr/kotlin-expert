@@ -48,7 +48,10 @@ object AppState {
     fun loadNotes(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
             _state.value = UiState(loading = true)
-            _state.value = UiState(notes = getNotes())
+            getNotes().collect {
+                _state.value = UiState(notes = it)
+            }
+
         }
     }
 
