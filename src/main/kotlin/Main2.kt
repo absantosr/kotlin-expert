@@ -21,7 +21,7 @@ fun App(): Unit = with(AppState) {
     if (state.notes == null) {
         // Lanza la acción por única vez
         LaunchedEffect(true) {
-            loadNotes()
+            loadNotes(this)
         }
     }
 
